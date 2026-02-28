@@ -21,16 +21,29 @@ class FavoriteManager {
 
         if (already) {
             favors.favorites.removeAll { it.idDrink == drink.idDrink }
-            Toast.makeText(context, "Removed from favorites", Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, "Removed from favorites", Toast.LENGTH_LONG).show()
         } else {
             favors.favorites.add(drink)
-            Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show()
         }
 
         prefs.edit().putString("list", Gson().toJson(favors)).apply()
     }
 
-    fun isFavorite(drink: Drink): Boolean {
-        return false
+    fun isFavorite(drink: Drink, context: Context): Boolean {
+        val prefs = context.getSharedPreferences("favorites", Context.MODE_PRIVATE)
+        val json = prefs.getString("list", null) ?: return false
+        val favors = Gson().fromJson(json, Favorites::class.java)
+
+        val already = favors.favorites.any { it.idDrink == drink.idDrink }
+
+        return already
+    }
+
+    fun getFavorites(context: Context): List<Drink> {
+        val prefs = context.getSharedPreferences("favorites", Context.MODE_PRIVATE)
+        val json = prefs.getString("list", null)
+        val favors = if (json != null) Gson().fromJson(json, Favorites::class.java) else Favorites()
+        return favors.favorites
     }
 }
