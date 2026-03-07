@@ -71,48 +71,48 @@ enum class Category {
                 )
 
                 OTHER -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 BEER -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 COCKTAIL -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 COCOA -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 COFFEE -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 LIQUOR -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 DRINK -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 PUNCH -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 SHAKE -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 SHOT -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
                 SOFT -> listOf(
-                    colorResource(R.color.light_green),
-                    colorResource(R.color.light_green)
+                    colorResource(R.color.dark_pink),
+                    colorResource(R.color.dark_pink)
                 )
             }
         }

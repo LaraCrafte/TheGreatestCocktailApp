@@ -24,10 +24,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import fr.isen.marylou_anchini.thegreatestcocktailapp.R
@@ -56,7 +55,6 @@ fun RandomCocktailScreen(modifier: Modifier, onComposing: (AppBarState) -> Unit)
     var drink = remember { mutableStateOf<Drink?>(null) }
 
     LaunchedEffect(Unit) {
-//        drink.value = ApiClient.retrofit.getRandom().drinks?.first()
         val call = ApiClient.retrofit.getRandomCocktail()
         call.enqueue(object : retrofit2.Callback<CocktailResponse> {
             override fun onResponse(
@@ -87,11 +85,10 @@ fun RandomCocktailScreen(modifier: Modifier, onComposing: (AppBarState) -> Unit)
 
 
 @Composable
-fun DetailCocktailScreen(drinkId: String, modifier: Modifier, onComposing: (AppBarState) -> Unit) {
+fun DetailCocktailScreen(drinkId: String, screenTitle: String, modifier: Modifier, onComposing: (AppBarState) -> Unit) {
     var drink = remember { mutableStateOf<Drink?>(null) }
 
     LaunchedEffect(Unit) {
-//        drink.value = ApiClient.retrofit.getRandom().drinks?.first()
         val call = ApiClient.retrofit.getDetailCocktail(drinkId)
         call.enqueue(object : retrofit2.Callback<CocktailResponse> {
             override fun onResponse(
@@ -109,7 +106,7 @@ fun DetailCocktailScreen(drinkId: String, modifier: Modifier, onComposing: (AppB
         })
 
         onComposing(
-            AppBarState("Random Cocktails",
+            AppBarState(screenTitle,
                 actions = { DetailCocktailTopButton(drink.value) })
         )
     }
@@ -124,28 +121,29 @@ fun DetailCocktailScreen(drinkId: String, modifier: Modifier, onComposing: (AppB
 @Composable
 fun DetailCocktailTopButton(drink: Drink?) {
     val context = LocalContext.current
-    val favoriteManager = FavoriteManager()
-    var isFav by remember(drink?.idDrink) {
-        mutableStateOf(drink?.let { favoriteManager.isFavorite(it, context) } ?: false)
-    }
+    val favoritesManager = FavoriteManager()
     drink?.let { drink ->
-        IconButton(onClick = {
-            favoriteManager.toggleFavorite(drink, context)
-            isFav = !isFav
-            //favoriteManager.toggleFavorite(drink, context)
+        var isFavorites = remember {
+            mutableStateOf<Boolean>(favoritesManager.isFavorite(drink, context))
+        }
+
+        IconButton({
+            favoritesManager.toggleFavorite(drink, context)
+            isFavorites.value = favoritesManager.isFavorite(drink, context)
         }) {
             Icon(
-                imageVector = if (favoriteManager.isFavorite(drink, context)) {
+                imageVector = if (isFavorites.value) {
                     Icons.Filled.Favorite
                 } else {
                     Icons.Filled.FavoriteBorder
                 },
                 contentDescription = "Localized description"
             )
-
         }
     }
 }
+
+
 
     @Composable
     fun DetailCocktailScreen(modifier: Modifier, drink: Drink) {
@@ -155,15 +153,13 @@ fun DetailCocktailTopButton(drink: Drink?) {
                     colors = listOf(
                         colorResource(id = R.color.orange),
                         colorResource(id = R.color.pink),
-                        //colorResource(id = R.color.purple_700)
                     )
                 )
             ).fillMaxSize()
         ) {
             Column(
                 modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                //verticalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 AsyncImage(
@@ -182,23 +178,29 @@ fun DetailCocktailTopButton(drink: Drink?) {
                 )
 
                 Text(
-                    drink.strDrink ?: "",
+                    text = drink.strDrink ?: "",
                     fontSize = 40.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
-                    //color = colorResource(R.color.white)
+                    lineHeight = 48.sp,
+                    color = Color.White,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    textAlign = TextAlign.Center
                 )
 
                 Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = modifier.fillMaxWidth()
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(40.dp)
                 ) {
-                    CategoryView(Category.OTHER)
-                    CategoryView(Category.MOCKTAILS)
+                    CategoryView(alcoholCategory(drink.strAlcoholic))
                 }
 
                 Text(
-                    text = "Highball Glass"
+                    text = drink.strGlass ?: "Unknown glass",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(top = 4.dp)
                 )
 
 
@@ -245,12 +247,21 @@ fun DetailCocktailTopButton(drink: Drink?) {
         }
     }
 
+    fun alcoholCategory(alcoholic: String?): Category {
+        return when (alcoholic?.trim()?.lowercase()) {
+            "alcoholic" -> Category.ALCOHOLIC
+            "non alcoholic" -> Category.MOCKTAILS
+            "optional alcohol" -> Category.OTHER
+            else -> Category.OTHER
+        }
+    }
+
+
     @Composable
     fun CategoryView(category: Category) {
-        //LIGNES DES COULEURS A REVOIR
         Box(
-            modifier = Modifier.padding(horizontal = 15.dp).clip(CircleShape)
-                .background(colorResource(id = R.color.light_green))
+            modifier = Modifier.padding(horizontal = 4.dp).clip(CircleShape)
+                .background(colorResource(id = R.color.dark_pink))
         )
         {
             Text(

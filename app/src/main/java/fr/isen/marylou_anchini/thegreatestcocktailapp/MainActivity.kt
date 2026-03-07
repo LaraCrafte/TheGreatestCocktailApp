@@ -77,16 +77,6 @@ class MainActivity : ComponentActivity() {
                             //Text("Detail")
                         }, actions = {
                             appBarState.value.actions?.invoke(this)
-                            /*IconButton({
-                                Toast
-                                    .makeText(context, "Add to favorite", Toast.LENGTH_LONG)
-                                    .show()
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Filled.FavoriteBorder,
-                                    contentDescription = "Localized description"
-                                )
-                            }*/
                         })
                     },
                     bottomBar = { BottomAppBar(tabItems, navController) }

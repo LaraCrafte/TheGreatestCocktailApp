@@ -1,7 +1,6 @@
 package fr.isen.marylou_anchini.thegreatestcocktailapp.managers
 
 import android.content.Context
-import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import fr.isen.marylou_anchini.thegreatestcocktailapp.dataclasses.Drink
@@ -21,10 +20,8 @@ class FavoriteManager {
 
         if (already) {
             favors.favorites.removeAll { it.idDrink == drink.idDrink }
-            //Toast.makeText(context, "Removed from favorites", Toast.LENGTH_LONG).show()
         } else {
             favors.favorites.add(drink)
-            //Toast.makeText(context, "Added to favorites", Toast.LENGTH_LONG).show()
         }
 
         prefs.edit().putString("list", Gson().toJson(favors)).apply()

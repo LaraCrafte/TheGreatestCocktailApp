@@ -22,6 +22,7 @@ class DetailCocktailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val drinkId = intent.getStringExtra(DRINKID) ?: ""
+        val screenTitle = intent.getStringExtra(SCREEN_TITLE) ?: "Random Cocktails"
         enableEdgeToEdge()
         setContent {
             val appBarState = remember { mutableStateOf(AppBarState()) }
@@ -34,7 +35,7 @@ class DetailCocktailActivity : ComponentActivity() {
                         )
                     },
                     modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DetailCocktailScreen(drinkId, Modifier.padding(innerPadding), { topBar ->
+                    DetailCocktailScreen(drinkId, screenTitle, Modifier.padding(innerPadding), { topBar ->
                         appBarState.value = topBar
                     })
                 }
@@ -44,5 +45,6 @@ class DetailCocktailActivity : ComponentActivity() {
 
     companion object {
         const val DRINKID = "drinkID"
+        const val SCREEN_TITLE = "screenTitle"
     }
 }

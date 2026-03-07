@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">TheGreatestCocktailApp</string>
     <string name="ingrendient">Ingredients</string>
-    <string name="preparation">Préparation</string>
-    <string name="cocktails_content_description">various cocktails</string>
-    <string name="title_activity_drinks">DrinksActivity</string>
-    <string name="title_activity_detail_cocktails">DetailCocktailActivity</string>
+    <string name="preparation">Preparation</string>
+    <string name="cocktails_content_description">Various cocktails</string>
+    <string name="title_activity_drinks">Drinks</string>
+    <string name="title_activity_detail_cocktails">Cocktail Details</string>
 
-    <string name="tab_item_random">A la une</string>
-    <string name="tab_item_category">Catégories</string>
-    <string name="tab_item_favorite">Favoris</string>
+    <string name="tab_item_random">Featured</string>
+    <string name="tab_item_category">Categories</string>
+    <string name="tab_item_favorite">Favorites</string>
 </resources>

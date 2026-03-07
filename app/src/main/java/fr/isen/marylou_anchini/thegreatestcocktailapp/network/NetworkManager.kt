@@ -1,6 +1,5 @@
 package fr.isen.marylou_anchini.thegreatestcocktailapp.network
 
-import fr.isen.marylou_anchini.thegreatestcocktailapp.network.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
